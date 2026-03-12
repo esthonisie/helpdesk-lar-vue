@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Note;
+use App\Models\Reply;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,11 +18,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            UserSeeder::class,
+            CategorySeeder::class,
         ]);
+
+        $users = User::factory(50)->create();
+
+        $tickets = Ticket::factory(150)
+            ->recycle($users)
+            ->create();
+
+        Reply::factory(50)
+            ->recycle($tickets->where('status', '!=', 'pending'))
+            ->create();
+        
+        Note::factory(100)
+            ->recycle($tickets->where('status', '!=', 'pending'))
+            ->create();
     }
 }

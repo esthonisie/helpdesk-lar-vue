@@ -18,9 +18,12 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'phone_number',
+        'is_admin',
     ];
 
     /**
@@ -43,6 +46,27 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean',
         ];
+    }
+
+    public function getNameAttribute(): string
+    {
+        return $this->first_name.' '.$this->last_name;
+    }
+
+    public function tickets() 
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function replies() 
+    {
+        return $this->hasMany(Reply::class);
+    }
+
+    public function notes() 
+    {
+        return $this->hasMany(Note::class);
     }
 }
