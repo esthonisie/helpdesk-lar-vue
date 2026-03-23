@@ -1,43 +1,42 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { login, getMessage401, isLoggedIn, goToDashboard } from '../state';
+import { login, getAuthMessage, isLoggedIn, goToDashboard } from '../state';
 
 if (isLoggedIn.value) {
   goToDashboard.value;
 }
 
 const credentials = ref({
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 });
 </script>
 
 <template>
-<div class="main-container">
-  <form @submit.prevent="login(credentials)">
-    <div class="error">
-      <template v-if="getMessage401">{{ getMessage401 }}</template>
-    </div>
+<form @submit.prevent="login(credentials)">
+  <div class="error">
+    <template v-if="getAuthMessage.error">{{ getAuthMessage.error }}</template>
+  </div>
 
-    <label for="email">Email:</label>
-    <input id="email" type="email" v-model="credentials.email" required />
+  <label for="email">Email:</label>
+  <input id="email" type="email" v-model="credentials.email" required />
 
-    <label for="password">Password:</label>
-    <input id="password" type="password" v-model="credentials.password" required />
+  <label for="password">Password:</label>
+  <input id="password" type="password" v-model="credentials.password" required />
 
-    <button type="submit">Log In</button>
-  </form>
-</div>
+  <button type="submit">Log In</button>
+  <RouterLink :to="{ name: 'forgot-password' }">forgot password?</RouterLink>
+</form>
 </template>
 
 <style scoped>
-.main-container, form {
+form {
   display: flex;
   flex-direction: column;
   width: 425px;
 }
 
-label, button {
+label, button, a, .error {
   margin-top: 12px;
 }
 

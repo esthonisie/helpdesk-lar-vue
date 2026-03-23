@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
-use App\Http\Resources\UserResource;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
 
 class AuthController extends Controller
 {
@@ -15,9 +20,9 @@ class AuthController extends Controller
         $credentials = $request->validated();
  
         if (!Auth::attempt($credentials)) {
-            throw new HttpResponseException(response()->json([
+            return response()->json([
                 'message' => 'The provided credentials do not match our records.'
-            ], 401));
+            ], 401);
         }
 
         $request->session()->regenerate();
@@ -46,5 +51,40 @@ class AuthController extends Controller
     public function me()
     {
         return new UserResource(Auth::user());
+    }
+
+    public function requestNewPassword(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+ 
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+ 
+        return $status === Password::ResetLinkSent
+            ? response()->json(['success' => __($status)])
+            : response()->json(['error' => __($status)]);
+    }
+
+    public function resetPassword(ResetPasswordRequest $request)
+    {
+        $request->validated();
+    
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+    
+                $user->save();
+    
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status === Password::PasswordReset
+            ? response()->json(['success' => __($status)])
+            : response()->json(['error' => __($status)]);
     }
 }

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { getLoggedInUser, logout } from '@/domains/auth/state';
-import type { User } from '@/domains/users/types';
 
-const user = getLoggedInUser.value as User;
+const user = getLoggedInUser.value;
 </script>
 
 <template>
@@ -15,8 +14,8 @@ const user = getLoggedInUser.value as User;
 </template>
 
 <style scoped>
-.main-container {
-  margin-top: 12px;
+.main-container, p, button {
+  margin-top: 20px;
 }
 
 button {

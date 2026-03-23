@@ -7,9 +7,17 @@
 </div>
 </template>
 
-<style scoped>
+<style>
 .main-content {
   display: flex;
   justify-content: center;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
 }
 </style>
