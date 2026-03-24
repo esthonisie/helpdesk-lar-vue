@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { login, getAuthMessage, isLoggedIn, goToDashboard } from '../state';
+import { login, isLoggedIn } from '..';
+import { goToDashboard } from '@/services/helpers/redirect';
+import ErrorMessage from '@/services/error/ErrorMessage.vue';
 
 if (isLoggedIn.value) {
   goToDashboard.value;
@@ -14,9 +16,7 @@ const credentials = ref({
 
 <template>
 <form @submit.prevent="login(credentials)">
-  <div class="error">
-    <template v-if="getAuthMessage.error">{{ getAuthMessage.error }}</template>
-  </div>
+  <div class="error"><ErrorMessage /></div>
 
   <label for="email">Email:</label>
   <input id="email" type="email" v-model="credentials.email" required />
@@ -26,6 +26,7 @@ const credentials = ref({
 
   <button type="submit">Log In</button>
   <RouterLink :to="{ name: 'forgot-password' }">forgot password?</RouterLink>
+  <RouterLink :to="{ name: 'register' }">register</RouterLink>
 </form>
 </template>
 

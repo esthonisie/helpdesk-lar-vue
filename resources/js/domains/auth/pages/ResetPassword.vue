@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { resetPassword, getAuthMessage, goToLogin } from '../state';
+import { resetPassword } from '..';
 import FormError from '@/services/error/FormError.vue';
+import ErrorMessage from '@/services/error/ErrorMessage.vue';
+import { getSuccessMessage } from '@/services/helpers/success';
 
 const { token } = useRoute().params;
 
@@ -15,16 +17,10 @@ const form = ref({
 </script>
 
 <template>
-<div v-if="getAuthMessage.success" class="overlay">
-  <div class="modal">
-    <p class="message success">{{ getAuthMessage.success }}</p>
-    <button @click="goToLogin">to login</button>
-  </div>
-</div>
-
 <form @submit.prevent="resetPassword(form)">
-  <div class="message error">
-    <template v-if="getAuthMessage.error">{{ getAuthMessage.error }}</template>
+  <div class="message">
+    <p class="error"><ErrorMessage /></p>
+    <p class="success">{{ getSuccessMessage }}</p>
   </div>
 
   <label for="email">Email:</label>
@@ -35,6 +31,7 @@ const form = ref({
 
   <label for="confirmmation">Confirm Password:</label>
   <input type="password" id="confirmation" v-model="form.password_confirmation" required />
+  <p class="info">the password must be at least 8 characters long and must contain at least one lowercase letter, one uppercase letter, one number and one symbol.</p>
 
   <button type="submit">Reset Password</button>
   
@@ -49,12 +46,17 @@ form {
   width: 425px;
 }
 
-label, button, a, .message {
+label, button, .message {
   margin-top: 12px;
 }
 
 button {
   width: fit-content;
+}
+
+.info {
+  text-transform: uppercase;
+  font-size: 12px;
 }
 
 .message {
@@ -66,27 +68,6 @@ button {
 }
 
 .success {
-  color: rgb(30, 140, 144);
-  margin-bottom: 12px;
-}
-
-.overlay {
-  position: absolute;
-  background-color: hsla(0, 0%, 0%, 0.3);
-  z-index: 10;
-  width: 100%;
-  height: 100%;
-}
-
-.modal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 425px;
-  height: 180px;
-  background-color: hsla(0, 0%, 100%);
-  border-radius: 4px;
-  padding: 15px;
-  margin: 40px auto;
+  color: rgb(17, 117, 130);
 }
 </style>

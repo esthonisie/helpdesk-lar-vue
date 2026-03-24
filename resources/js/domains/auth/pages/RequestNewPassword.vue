@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { requestNewPassword, getAuthMessage } from '../state';
+import { requestNewPassword } from '..';
+import ErrorMessage from '@/services/error/ErrorMessage.vue';
+import { getSuccessMessage } from '@/services/helpers/success';
 
 const email = ref('');
 </script>
@@ -8,8 +10,8 @@ const email = ref('');
 <template>
 <form @submit.prevent="requestNewPassword({ email })">
   <div class="message">
-    <p v-if="getAuthMessage.error" class="error">{{ getAuthMessage.error }}</p>
-    <p v-if="getAuthMessage.success" class="success">{{ getAuthMessage.success }}</p>
+    <p class="error"><ErrorMessage /></p>
+    <p class="success">{{ getSuccessMessage }}</p>
   </div>
 
   <label for="email">Email:</label>
@@ -42,6 +44,6 @@ button {
 }
 
 .success {
-  color: rgb(30, 140, 144);
+  color: rgb(17, 117, 130);
 }
 </style>

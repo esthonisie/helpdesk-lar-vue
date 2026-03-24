@@ -1,16 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { authRoutes } from '@/domains/auth/routes';
+import { userRoutes } from '@/domains/users/routes';
 import { dashboardRoutes } from '@/domains/dashboard/routes';
-import { isLoggedIn, reFetch, roles } from '@/domains/auth/state';
-import { resetErrorMessages } from '@/services/error/reset';
+import { isLoggedIn, reFetch, roles } from '@/domains/auth';
+import { resetMessages } from '@/services/helpers/resetMessages';
 
 export const router = createRouter({
   history: createWebHistory(),
-  routes: [...authRoutes, ...dashboardRoutes],
+  routes: [...authRoutes, ...userRoutes, ...dashboardRoutes],
 });
 
 router.beforeEach(async (to, from): Promise<void | object> => {
-  resetErrorMessages();
+  resetMessages();
 
   const requiredRoles = to.meta.roles;
   const requiresAuth = to.meta.requiresAuth;

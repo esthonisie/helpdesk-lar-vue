@@ -62,8 +62,8 @@ class AuthController extends Controller
         );
  
         return $status === Password::ResetLinkSent
-            ? response()->json(['success' => __($status)])
-            : response()->json(['error' => __($status)]);
+            ? response()->json(['message' => __($status)])
+            : response()->json(['message' => __($status)], 401);
     }
 
     public function resetPassword(ResetPasswordRequest $request)
@@ -84,7 +84,7 @@ class AuthController extends Controller
         );
 
         return $status === Password::PasswordReset
-            ? response()->json(['success' => __($status)])
-            : response()->json(['error' => __($status)]);
+            ? response()->json(['message' => __($status)])
+            : response()->json(['message' => __($status)], 401);
     }
 }

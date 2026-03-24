@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getLoggedInUser, logout } from '@/domains/auth/state';
+import { getLoggedInUser, logout, isAdmin } from '@/domains/auth';
 
 const user = getLoggedInUser.value;
 </script>
@@ -7,7 +7,7 @@ const user = getLoggedInUser.value;
 <template>
 <div class="main-container">
   <p>Welcome {{ user?.name }}</p>
-  <p v-if="user?.isAdmin">TEST: this user is an admin</p>
+  <p v-if="isAdmin">TEST: this user is an admin</p>
   <p v-else>TEST: this user is not an admin</p>
   <button @click="logout">Log Out</button>
 </div>

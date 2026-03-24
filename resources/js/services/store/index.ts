@@ -1,6 +1,6 @@
-import {New, State, Updatable} from './types';
-import {computed, ref} from 'vue';
-import {deleteRequest, getRequest, postRequest, putRequest} from '../http';
+import { New, State, Updatable } from './types';
+import { computed, ref } from 'vue';
+import { deleteRequest, getRequest, postRequest, putRequest } from '../http';
 
 export const storeModuleFactory = <T extends {id: number}>(moduleName: string) => {
   const state: State<T> = ref({});
@@ -24,22 +24,22 @@ export const storeModuleFactory = <T extends {id: number}>(moduleName: string) =
 
   const actions = {
     getAll: async () => {
-      const {data} = await getRequest(moduleName);
+      const { data } = await getRequest(moduleName);
       if (!data) return;
       setters.setAll(data);
     },
     getById: async (id: number) => {
-      const {data} = await getRequest(`${moduleName}/${id}`);
+      const { data } = await getRequest(`${moduleName}/${id}`);
       if (!data) return;
       setters.setById(data);
     },
     create: async (newItem: New<T>) => {
-      const {data} = await postRequest(moduleName, newItem);
+      const { data } = await postRequest(moduleName, newItem);
       if (!data) return;
       setters.setById(data);
     },
     update: async (id: number, item: Updatable<T>) => {
-      const {data} = await putRequest(`${moduleName}/${id}`, item);
+      const { data } = await putRequest(`${moduleName}/${id}`, item);
       if (!data) return;
       setters.setById(data);
     },
