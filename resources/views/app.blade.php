@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Help Desk Ticketing System</title>
         @vite([
+            'resources/css/reset.css',
             'resources/css/app.css', 
             'resources/js/app.ts'
         ])

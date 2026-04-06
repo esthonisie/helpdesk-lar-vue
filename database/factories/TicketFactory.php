@@ -25,6 +25,9 @@ class TicketFactory extends Factory
             'title' => ucfirst(fake()->words(rand(5, 10), true)),
             'body' => fake()->text(250),
             'status' => fake()->randomElement(['pending', 'open', 'closed']),
+            'priority' => fake()->randomElement(['low', 'medium', 'high', 'urgent']),
+            'created_at' => fake()->dateTimeBetween('-2 weeks', '-6 days', null),
+            'updated_at' => fake()->dateTimeBetween('-4 days', 'now', null),
         ];
     }
 }

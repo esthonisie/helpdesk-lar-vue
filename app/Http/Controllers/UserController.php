@@ -13,12 +13,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return UserResource::collection(User::all());
     }
 
     public function register(RegisterRequest $request)
@@ -29,7 +26,7 @@ class UserController extends Controller
 
         $user = User::create($validated);
 
-        Mail::to($user)->send(new WelcomeMail($user));
+        //Mail::to($user)->send(new WelcomeMail($user));
 
         Auth::login($user);
 

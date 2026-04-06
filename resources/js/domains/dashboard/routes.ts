@@ -1,17 +1,19 @@
-import UserDashboard from './pages/UserDashboard..vue';
-import AdminDashboard from './pages/AdminDashboard.vue';
+import Dashboard from './pages/Dashboard.vue';
+import Tickets from '../tickets/pages/Tickets.vue';
 
 export const dashboardRoutes = [
   { 
     path: '/dashboard', 
-    component: UserDashboard, 
+    component: Dashboard, 
     name: 'dashboard',
+    children: [
+      {
+        path: 'tickets',
+        component: Tickets,
+        name: 'tickets',
+      },
+    ],
     meta: { requiresAuth: true }
-  },
-  { 
-    path: '/admin', 
-    component: AdminDashboard, 
-    name: 'admin',
-    meta: { requiresAuth: true, roles: ['admin'] }
+    // meta: { requiresAuth: true, roles: ['admin'] }
   },
 ]

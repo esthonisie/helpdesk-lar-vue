@@ -2,33 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TicketResource;
+use App\Http\Requests\StoreTicketRequest;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+     /**
+     * Admins only!
      */
     public function index()
     {
-        //
+        return TicketResource::collection(Ticket::all());
     }
 
     /**
-     * Show the form for creating a new resource.
+     * For privacy, a client is not allowed to see all the tickets (including via Dev Tools!!).
      */
-    public function create()
+    public function ticketsUser()
     {
-        //
+        return TicketResource::collection(Ticket::where('user_id', Auth::id())->get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(StoreTicketRequest $request) {
+        $ticket = Ticket::create($request->validated());
+        return new TicketResource($ticket);
     }
 
     /**

@@ -13,7 +13,7 @@ export const router = createRouter({
 router.beforeEach(async (to, from): Promise<void | object> => {
   resetMessages();
 
-  const requiredRoles = to.meta.roles;
+  // const requiredRoles = to.meta.roles;
   const requiresAuth = to.meta.requiresAuth;
   
   // in case user is logged in but data got cleared because of page reload
@@ -26,8 +26,8 @@ router.beforeEach(async (to, from): Promise<void | object> => {
     return { name: 'login' };
   }
   // access for admin only
-  if (requiredRoles && roles.value !== 'admin') {
-    alert('Access denied, you need to be an admin.');
-    return { name: 'dashboard' };
-  }
+  // if (requiredRoles && roles.value !== 'admin') {
+  //   alert('Access denied, you need to be an admin.');
+  //   return { name: 'dashboard' };
+  // }
 });

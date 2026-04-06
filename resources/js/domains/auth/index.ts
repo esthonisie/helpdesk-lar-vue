@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ref, computed } from 'vue';
+import { ticketStore } from '../tickets';
 import { getRequest, postRequest } from '@/services/http';
 import { goToLogin, goToDashboard } from '@/services/helpers/redirect';
 import { setSuccessMessage, destroySuccessMessage } from '@/services/helpers/success';
@@ -18,13 +19,14 @@ export const login = async (credentials: Credentials) => {
     await axios.get('/sanctum/csrf-cookie');
     const { data } = await postRequest('login', credentials);
     loggedInUser.value = data.user;
-    goToDashboard.value;
+    goToDashboard();
   } catch (error: any) {
   }
 };
 
 export const logout = async () => {
   await axios.post('/api/logout');
+  ticketStore.setters.clearAll();
   loggedInUser.value = null;
   goToLogin();
 };

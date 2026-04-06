@@ -5,7 +5,7 @@ import { goToDashboard } from '@/services/helpers/redirect';
 import ErrorMessage from '@/services/error/ErrorMessage.vue';
 
 if (isLoggedIn.value) {
-  goToDashboard.value;
+  goToDashboard();
 }
 
 const credentials = ref({

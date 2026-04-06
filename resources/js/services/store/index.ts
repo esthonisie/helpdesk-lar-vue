@@ -17,6 +17,9 @@ export const storeModuleFactory = <T extends {id: number}>(moduleName: string) =
     setById: (item: T) => {
       state.value[item.id] = Object.freeze(item);
     },
+    clearAll: () => {
+      state.value = {};
+    },
     deleteById: (id: number) => {
       delete state.value[id];
     },

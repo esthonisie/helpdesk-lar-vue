@@ -56,7 +56,7 @@ button {
 
 .info {
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: var(--font-size-12);
 }
 
 .message {

@@ -16,11 +16,12 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class, 'user_id');
-            $table->foreignIdFor(User::class, 'admin_id');
+            $table->foreignIdFor(User::class, 'admin_id')->nullable();
             $table->foreignIdFor(Category::class);
             $table->string('title');
             $table->text('body');
-            $table->string('status');
+            $table->string('status')->default('pending');
+            $table->string('priority');
             $table->timestamps();
         });
     }
