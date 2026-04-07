@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import CreateTicket from '../pages/CreateTicket.vue';
 import type { Ticket } from '../types';
+import TicketForm from './TicketForm.vue';
 
 const props = defineProps<{ 
   tickets: Readonly<Ticket>[] | void, 
@@ -10,52 +12,66 @@ const props = defineProps<{
 
 <template>
 <div class="main-container">
+  <div class="create-container">
+    <TicketForm />
+  </div>
   
-  <div class="head">ID</div>
-  <div class="head">Category</div>
-  <div class="head">Subject</div>
-  <div class="head">Requester</div>
-  <div class="head">Date</div>
-  <div class="head">Priority</div>
-  <div class="head">Status</div>
-  <div class="head">Assignee</div>
-  <div class="head">Modified</div>
+  <div class="overview-container">
+  
+    <div class="head">ID</div>
+    <div class="head">Category</div>
+    <div class="head">Subject</div>
+    <div class="head">Requester</div>
+    <div class="head">Date</div>
+    <div class="head">Priority</div>
+    <div class="head">Status</div>
+    <div class="head">Assignee</div>
+    <div class="head">Modified</div>
 
-  <hr class="span-all head-shadow">
-  
-  <template v-for="ticket in tickets" :key="ticket.id">
-  <div class="data">#{{ ticket.id }}</div>
-  <div class="data">{{ categoryName(ticket.category_id) }}</div>
-  <div class="data">{{ ticket.title }}</div>
-  <div class="data">{{ userName(ticket.user_id) }}</div>
-  <div class="data">{{ ticket.created_at }}</div>
-  <div class="data">{{ ticket.priority }}</div>
-  <div class="data">{{ ticket.status }}</div>
-  <div class="data">{{ userName(ticket.admin_id) }}</div>
-  <div class="data">{{ ticket.updated_at }}</div>
-  
-  <!-- <div class="span-all quick-view">
-    <p>{{ ticket.body }}</p>
-  </div> -->
+    <hr class="span-all head-shadow">
+    
+    <template v-for="ticket in tickets" :key="ticket.id">
+    <div class="data">#{{ ticket.id }}</div>
+    <div class="data">{{ categoryName(ticket.category_id) }}</div>
+    <div class="data">{{ ticket.title }}</div>
+    <div class="data">{{ userName(ticket.user_id) }}</div>
+    <div class="data">{{ ticket.created_at }}</div>
+    <div class="data">{{ ticket.priority }}</div>
+    <div class="data">{{ ticket.status }}</div>
+    <div class="data">{{ userName(ticket.admin_id) }}</div>
+    <div class="data">{{ ticket.updated_at }}</div>
+    
+    <!-- <div class="span-all quick-view">
+      <p>{{ ticket.body }}</p>
+    </div> -->
 
-  <hr class="span-all divider">
-  </template>
+    <hr class="span-all divider">
+    </template>
+  </div>
 </div>
 </template>
 
 <style scoped>
 .main-container {
   display: grid;
+  grid-template-columns: minmax(19rem, 1fr) 2fr;
+}
+
+.create-container {
+}
+
+.overview-container {
+  display: grid;
   grid-template-columns: 
     minmax(4.4rem, 1fr) /* id */
     minmax(7rem, 4fr) /* category */
     minmax(10rem, 7fr) /* subject */
-    minmax(7rem, 4fr) /* requester */
-    minmax(6rem, 3fr) /* date */
+    minmax(7rem, 3fr) /* requester */
+    minmax(6rem, 2fr) /* date */
     minmax(5.5rem, 2fr) /* priority */
     minmax(5.5rem, 2fr) /* status */
-    minmax(7rem, 4fr) /* assignee */
-    minmax(6rem, 3fr); /* modified */
+    minmax(7rem, 3fr) /* assignee */
+    minmax(6rem, 2fr); /* modified */
 }
 
 .head {

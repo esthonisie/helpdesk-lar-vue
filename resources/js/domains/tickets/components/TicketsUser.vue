@@ -46,7 +46,7 @@ const props = defineProps<{
 }
 
 .info {
-  color: rgb(77, 77, 77);
+  color: hsl(0, 0%, 30%);
   text-transform: uppercase;
   font-size: var(--font-size-14);
 }

@@ -5,8 +5,8 @@ export interface Ticket {
   category_id: number;
   title: string;
   body: string;
-  status: string;
+  status?: string;
   priority: string;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
 }

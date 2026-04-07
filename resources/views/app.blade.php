@@ -6,6 +6,7 @@
         <title>Help Desk Ticketing System</title>
         @vite([
             'resources/css/reset.css',
+            'resources/css/form.css',
             'resources/css/app.css', 
             'resources/js/app.ts'
         ])
